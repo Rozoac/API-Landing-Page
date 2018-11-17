@@ -17,7 +17,8 @@ let arquitectonicoSchema = new Schema({
      }, 
     caracteristicas: {
         cocina: { type: String, required: [true, 'Cocina es necesario']  },
-        banio: { type: String, required: [true, 'Baño es necesario'] }
+        banio: { type: String, required: [true, 'Baño es necesario'] },
+        area: { type: String, required: [true, 'Area es necesario'] }
     },
     imgs: {
         plano: { type: String, required: [true, 'Plano es necesario']  },
@@ -31,4 +32,4 @@ let arquitectonicoSchema = new Schema({
     }
 });
 
-module.exports = mongoose.model("Contenedor", arquitectonicoSchema);
+module.exports = mongoose.model("Arquitectonico", arquitectonicoSchema);
