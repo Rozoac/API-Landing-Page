@@ -25,7 +25,7 @@ app.post("/signature", (req, res) => {
         err
       });
     }
-    if(comercio[0].modo = "prueba"){
+    if(comercio[0].modo === "prueba"){
       merchantId = 508029;
       accountId = 512321;
       apiKey = '4Vj8eK4rloUd272L48hsrarnUA';
