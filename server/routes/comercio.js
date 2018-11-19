@@ -40,6 +40,7 @@ app.post("/signature", (req, res) => {
     }
     res.json({
       ok: true,
+      ejemplo: comercio,
       merchantId:  merchantId,
       accountId: accountId,
       currency: comercio[0].currency,
