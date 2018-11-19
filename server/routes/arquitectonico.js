@@ -2,7 +2,7 @@ const express = require("express");
 const Arquitectonico = require("../models/arquitectonico");
 const fileUpload = require("express-fileupload");
 const app = express();
-// app.use(fileUpload());
+app.use(fileUpload());
 
 
 //Mostrar todos los proyectos
@@ -30,33 +30,33 @@ app.get("/arquitectonico", (req, res) =>{
 app.get("/arquitectonico/:id", (req, res, next) => {
   var id = req.params.id;
 
-  Contenedor.findById(id)
-    .exec((err, contenedor) => {
+  Arquitectonico.findById(id)
+    .exec((err, arquitectonico) => {
       if (err) {
         return res
           .status(500)
           .json({
             ok: false,
-            mensaje: "Error cargando contenedor",
+            mensaje: "Error cargando proyecto arquitectonico",
             error: err
           });
       }
-      if (!contenedor) {
+      if (!arquitectonico) {
         return res
           .status(400)
           .json({
             ok: false,
-            mensaje: "El contenedor con el id " + id + " no existe",
-            errors: { message: "No existe un contenedor con ese ID" }
+            mensaje: "El proyecto arquitectonico con el id " + id + " no existe",
+            errors: { message: "No existe un proyecto arquitectonico con ese ID" }
           });
       }
-      res.status(200).json({ ok: true, contenedor: contenedor });
+      res.status(200).json({ ok: true, arquitectonico: arquitectonico });
     });
 });
 
-// CREAR CONTENEDOR
-app.post("/contenedor", (req, res) => {
-  if (!req.files.img) {
+// CREAR arquitectonico
+app.post("/arquitectonico", (req, res) => {
+  if (!req.files) {
     return res.status(400).json({
       ok: false,
       err: {
@@ -64,61 +64,49 @@ app.post("/contenedor", (req, res) => {
       }
     });
   }
-  console.log(req.body);
   let body = req.body;
-  let img = req.files.img;
-  let nombreCortado = img.name.split(".");
-  let extension = nombreCortado[nombreCortado.length - 1];
-
-  let extensionesValidas = ["png", "jpg", "gif", "jpeg"];
-
-  if (extensionesValidas.indexOf(extension) < 0) {
-    return res
-      .status(400)
-      .json({
-        ok: false,
-        err: {
-          message:
-            "Las extensiones permitidas son " + extensionesValidas.join(", "),
-          ext: extension
-        }
-      });
-  }
-
-  let prueba = body.nombre.toLowerCase().replace(/\s/g, "-");
-  let nombreArchivo = `${prueba}-${new Date().getMilliseconds()}.${extension}`;
-
+  let plano = req.files.plano;
+  let img_1 = req.files.img_1;
+  let img_2 = req.files.img_2;
+  let img_3 = req.files.img_3;
   
 
-  let contenedor = new Contenedor({
-    nombre: body.nombre,
-    descripcion: body.descripcion,
-    subtitulo: body.subtitulo,
-    img: nombreArchivo,    
-    estado: body.estado ,
-    pais: body.pais | "Colombia",
-    tipo: body.tipo
-  });
+  let nombreCortado1 = plano.name.split(".");
+  let nombreCortado2 = img_1.name.split(".");
+  let nombreCortado3 = img_2.name.split(".");
+  let nombreCortado4 = img_3.name.split(".");
+  let extension = nombreCortado1[nombreCortado1.length - 1];
+  let extension2 = nombreCortado2[nombreCortado2.length - 1];
+  let extension3 = nombreCortado3[nombreCortado3.length - 1];
+  let extension4 = nombreCortado4[nombreCortado4.length - 1];
+  let nombreArchivo = `plano-${new Date().getMilliseconds()}.${extension}`;
+  let nombreArchivo2 = `img-${new Date().getMilliseconds()}.${extension2}`;
+  let nombreArchivo3 = `img_2-${new Date().getMilliseconds()}.${extension3}`;
+  let nombreArchivo4 = `img_3-${new Date().getMilliseconds()}.${extension4}`;
+  
 
-  contenedor.save((err, contenedor) => {
-    if (err) {
-      return res.status(400).json({
-        ok: false,
-        err
-      });
-    }
-    img.mv(`uploads/contenedores/${nombreArchivo}`, err => {
-      if (err) return res.status(500).json({ ok: false, err });
+  // let arquitectonico = new Arquitectonico(req.body);
 
-      res.json({ 
-        ok: true, 
-        message: "Archivo cargado op!",
-      contenedor: contenedor });
-    });
-
+  for (var key in req.files) {
+    thisFile = req.files[key];
+    console.log(req.files[key].name);
+    // thisFile.mv('public/images/' + req.files[key].name, function(err) {
+   
     
-  });
-});
+};
+   });
+
+
+//   arquitectonico.save((err, arquitectonico) => {
+//     if (err) {
+//       return res.status(400).json({
+//         ok: false,
+//         err
+//       });
+//     }
+
+// }
+
 
 // ACTUALIZAR CONTENEDOR
 

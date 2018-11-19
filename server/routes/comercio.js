@@ -31,7 +31,8 @@ app.post("/signature", (req, res) => {
       apiKey = '4Vj8eK4rloUd272L48hsrarnUA';
       signatureString = `${apiKey}~${merchantId}~${body.referenceCode}~${ body.amount }~${ comercio[0].currency}`;
       signature = md5(signatureString);
-    }else{
+    }
+    if(comercio[0].modo = "produccion"){
     signatureString = `${comercio[0].apiKeyPayu}~${comercio[0].merchantId}~${body.referenceCode}~${body.amount}~${comercio[0].currency}`;
     signature = md5(signatureString);
     merchantId = comercio[0].merchantId;
