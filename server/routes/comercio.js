@@ -48,6 +48,15 @@ app.post("/signature", (req, res) => {
     });
   });
 });
+/*=================================================
+                DEVOLVER SIGNATURE
+==================================================*/
+
+app.post("/payu", (req, res) => {
+  let body = req.body;
+
+  console.log(res);
+});
 
 /*=================================================
                     MOSTRAR COMERCIOS
