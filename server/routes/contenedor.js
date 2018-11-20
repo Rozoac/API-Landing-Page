@@ -27,6 +27,25 @@ Contenedor.find({estado: true}).exec((err, contenedores) =>{
 })
 
 })
+app.get("/contenedorEcuador", (req, res) =>{
+
+Contenedor.find({estado: true, pais: 'Colombia-Ecuador'}).exec((err, contenedores) =>{
+  if (err){
+    return res.status(400).json({
+      ok:false,
+      err
+    })
+  }
+  Contenedor.count({}, (err, contador) =>{
+    res.json({
+      ok:true,
+      contenedores,
+      total: contador
+    });
+  })
+})
+
+})
 //asd
 
 app.get("/contenedor/:id", (req, res, next) => {
